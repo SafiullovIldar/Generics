@@ -16,13 +16,4 @@ public class User {
     private LocalDate  birthDate;
     private Address address;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Address {
-
-        private String city;
-        private String streetName;
-        private int flatNumber;
-    }
 }

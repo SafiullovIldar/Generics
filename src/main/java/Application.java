@@ -1,44 +1,45 @@
 import dto.UserDTO;
-import service.impl.UserService;
+import entity.User;
+import service.impl.GenericService;
 import util.Util;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Application {
 
     public static void main(String[] args) {
 
-        UserService userService = new UserService();
-        List<UserDTO> userList = userService.getAllUsers();
+        GenericService<UserDTO, User> genericService = new GenericService<>();
+        List<User> userList = genericService.getAll(User.class);
 
         System.out.println("===============================");
-        userService.addAllUsers(userList);
+        genericService.saveAll(Arrays.asList(Util.initRandomUserDTO(),
+                                            Util.initRandomUserDTO()));
         System.out.println("===============================");
-        userService.addUser(Util.initRandomUserDTO());
+        genericService.save(Util.initRandomUserDTO());
         System.out.println("===============================");
-        for (UserDTO user : userList) {
+        for (User user : userList) {
             System.out.println(user.toString());
         }
         System.out.println("===============================");
-        System.out.println(userService.getUser());
+        System.out.println(genericService.get(User.class));
 
-        Collections.sort(userList, Comparator.comparing(UserDTO::getId));
+
+        Collections.sort(userList, Comparator.comparing(User::getId));
         System.out.println("\nSorted by Id");
-        for (UserDTO user : userList) {
+        for (User user : userList) {
             System.out.println(user.toString());
         }
 
-        Collections.sort(userList, Comparator.comparing(UserDTO::getBirthDate));
+        Collections.sort(userList, Comparator.comparing(User::getBirthDate));
         System.out.println("\nSorted by birthDate");
-        for (UserDTO user : userList) {
+        for (User user : userList) {
             System.out.println(user.toString());
         }
 
         Collections.sort(userList, Comparator.comparing(user -> user.getAddress().getFlatNumber()));
         System.out.println("\nSorted by flatNumber");
-        for (UserDTO user : userList) {
+        for (User user : userList) {
             System.out.println(user.toString());
         }
     }
