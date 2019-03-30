@@ -1,48 +1,70 @@
-import dto.UserDTO;
-import entity.User;
+import dto.ManDTO;
+import dto.WomanDTO;
+import entity.Man;
+import entity.Woman;
 import service.impl.GenericService;
 import util.Util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Application {
 
     public static void main(String[] args) {
 
-        GenericService<UserDTO, User> genericService = new GenericService<>();
-        List<User> userList = genericService.getAll(User.class);
+        GenericService<ManDTO, Man> manService = new GenericService<>();
+        List<Man> manList = manService.getAll(Man.class);
+
+        GenericService<WomanDTO, Woman> womanService = new GenericService<>();
+        List<Woman> womanList = womanService.getAll(Woman.class);
+
+        List<ManDTO> manDTOList = new ArrayList<>();
+        manDTOList.add(Util.initRandomManDTO());
+        manDTOList.add(Util.initRandomManDTO());
+
+        List<WomanDTO> womanDTOList = new ArrayList<>();
+        womanDTOList.add(Util.initRandomWomanDTO());
+        womanDTOList.add(Util.initRandomWomanDTO());
 
         System.out.println("===============================");
-        genericService.saveAll(Arrays.asList(Util.initRandomUserDTO(),
-                                            Util.initRandomUserDTO()));
+        manService.saveAll(manDTOList);
+        womanService.saveAll(womanDTOList);
+
         System.out.println("===============================");
-        genericService.save(Util.initRandomUserDTO());
+        manService.save(Util.initRandomManDTO());
+        womanService.save(Util.initRandomWomanDTO());
+
         System.out.println("===============================");
-        for (User user : userList) {
-            System.out.println(user.toString());
+        for (Man man : manList) {
+            System.out.println(man.toString());
         }
+        for (Woman woman : womanList) {
+            System.out.println(woman.toString());
+        }
+
         System.out.println("===============================");
-        System.out.println(genericService.get(User.class));
+        System.out.println(manService.get(Man.class));
+        System.out.println(womanService.get(Woman.class));
 
 
-        Collections.sort(userList, Comparator.comparing(User::getId));
+        Collections.sort(manList, Comparator.comparing(Man::getId));
         System.out.println("\nSorted by Id");
-        for (User user : userList) {
-            System.out.println(user.toString());
+        for (Man man : manList) {
+            System.out.println(man.toString());
         }
 
-        Collections.sort(userList, Comparator.comparing(User::getBirthDate));
+        Collections.sort(manList, Comparator.comparing(Man::getBirthDate));
         System.out.println("\nSorted by birthDate");
-        for (User user : userList) {
-            System.out.println(user.toString());
+        for (Man man : manList) {
+            System.out.println(man.toString());
         }
 
-        Collections.sort(userList, Comparator.comparing(user -> user.getAddress().getFlatNumber()));
+        Collections.sort(manList, Comparator.comparing(myMan -> myMan.getAddress().getFlatNumber()));
         System.out.println("\nSorted by flatNumber");
-        for (User user : userList) {
-            System.out.println(user.toString());
+        for (Man man : manList) {
+            System.out.println(man.toString());
         }
     }
-
-
 }

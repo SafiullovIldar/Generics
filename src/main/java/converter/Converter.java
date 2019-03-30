@@ -1,6 +1,6 @@
 package converter;
 
-public interface Converter<S,T> {
+public interface Converter<T, E> {
 
-    T convert(S var);
+    T convert(E e);
 }
